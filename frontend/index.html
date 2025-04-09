@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head><title>Token Vesting dApp</title></head>
+<body>
+  <h1>Vesting Dashboard</h1>
+  <button onclick="connect()">Connect Wallet</button>
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.6.2/dist/ethers.umd.min.js"></script>
+  <script>
+    async function connect() {
+      if (window.ethereum) {
+        await window.ethereum.request({ method: 'eth_requestAccounts' });
+        alert("Wallet connected!");
+      }
+    }
+  </script>
+</body>
+</html>
