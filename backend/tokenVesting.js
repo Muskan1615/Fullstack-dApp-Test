@@ -1,11 +1,13 @@
 const { ethers } = require("ethers");
-const { contractAddress, rpcUrl, privateKey } = require("./config");
 const TokenVestingABI = require("./abi/TokenVestingABI.json");
+const dotenv = require("dotenv");
 
-const provider = new ethers.JsonRpcProvider(rpcUrl);
-const signer = new ethers.Wallet(privateKey, provider);
+dotenv.config();
+
+const provider = new ethers.JsonRpcProvider(process.env.RPC_URL);
+const signer = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
 const tokenVestingContract = new ethers.Contract(
-  contractAddress,
+  process.env.CONTRACT_ADDRESS,
   TokenVestingABI,
   signer
 );
