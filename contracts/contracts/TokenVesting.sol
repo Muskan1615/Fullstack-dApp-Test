@@ -43,6 +43,7 @@ contract TokenVesting is Ownable {
         );
         require(start >= block.timestamp, "Start in past");
         require(amount > 0, "Amount must be greater than 0");
+        require(duration > 0, "Invalid duration");
 
         schedules[beneficiary] = VestingSchedule({
             totalAmount: amount,
@@ -69,7 +70,7 @@ contract TokenVesting is Ownable {
     }
 
     function _calculateClaimable(
-        VestingSchedule memory schedule
+        VestingSchedule storage schedule
     ) internal view returns (uint256) {
         if (block.timestamp < schedule.start) {
             return 0;
@@ -78,6 +79,10 @@ contract TokenVesting is Ownable {
         uint256 elapsed = block.timestamp - schedule.start;
         uint256 vestedAmount = (schedule.totalAmount * elapsed) /
             schedule.duration;
+
+        if (vestedAmount > schedule.totalAmount) {
+            vestedAmount = schedule.totalAmount;
+        }
         uint256 claimableAmount = vestedAmount - schedule.claimed;
 
         return claimableAmount;

@@ -85,6 +85,7 @@ npx hardhat run scripts/addVesting.ts --network localhost
 - Transfer tokens to vesting contract
 - Write deployed addresses to deployments/localhost.json
 - Copy ABI and addresses to both frontend/ and backend/
+- Add vesting for addresses that are part of vesting.json file
 
 3. Run the Backend
 
@@ -99,7 +100,7 @@ VESTING_ADDRESS=deployed-vesting-address
 - Run backend
 
 ```bash
-cd ../backend
+cd backend
 npm install
 node app.js
 ```

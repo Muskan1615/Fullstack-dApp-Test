@@ -73,7 +73,7 @@ describe("TokenVesting", function () {
 
     await expect(
       vestingContract.addVesting(beneficiary.address, amount, start, duration)
-    ).to.be.revertedWith("Vesting exists");
+    ).to.be.revertedWith("Vesting already exists");
   });
 
   it("should revert if start time is in the past", async () => {
@@ -147,7 +147,7 @@ describe("TokenVesting", function () {
 
     await expect(
       vestingContract.connect(beneficiary).claim()
-    ).to.be.revertedWith("Nothing to claim");
+    ).to.be.revertedWith("No claimable tokens");
   });
 
   it("should revert if the beneficiary is zero address", async () => {
@@ -179,7 +179,7 @@ describe("TokenVesting", function () {
 
     await expect(
       vestingContract.addVesting(beneficiary.address, amount, start, duration)
-    ).to.be.revertedWith("Invalid amount");
+    ).to.be.revertedWith("Amount must be greater than 0");
   });
 
   it("should revert if the vesting duration is zero", async () => {
@@ -223,7 +223,7 @@ describe("TokenVesting", function () {
     // Second claim should fail
     await expect(
       vestingContract.connect(beneficiary).claim()
-    ).to.be.revertedWith("Nothing to claim");
+    ).to.be.revertedWith("No claimable tokens");
   });
 
   it("should revert if a non-owner tries to add vesting schedule", async () => {
