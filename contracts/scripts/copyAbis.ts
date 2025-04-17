@@ -5,7 +5,7 @@ const contractNames = ["TokenVesting"];
 
 const artifactsDir = path.resolve(__dirname, "..", "artifacts", "contracts");
 const backendAbiDir = path.resolve(__dirname, "..", "..", "backend", "abi");
-const frontendAbiDir = path.resolve(__dirname, "..", "..", "frontend");
+const frontendAbiDir = path.resolve(__dirname, "..", "..", "frontend", "abi");
 
 function copyAbi(contractName: string) {
   const abiPath = path.join(
