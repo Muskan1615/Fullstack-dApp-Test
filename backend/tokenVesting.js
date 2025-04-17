@@ -7,7 +7,7 @@ dotenv.config();
 const provider = new ethers.JsonRpcProvider(process.env.RPC_URL);
 const signer = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
 const tokenVestingContract = new ethers.Contract(
-  process.env.CONTRACT_ADDRESS,
+  process.env.VESTING_ADDRESS,
   TokenVestingABI,
   signer
 );

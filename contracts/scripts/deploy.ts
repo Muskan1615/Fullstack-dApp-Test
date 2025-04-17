@@ -52,6 +52,22 @@ async function main() {
     JSON.stringify(output, null, 2)
   );
   console.log("Addresses saved to deployments/localhost.json");
+
+  // Also copy to frontend
+  const frontendDeploymentsDir = path.resolve(
+    __dirname,
+    "..",
+    "..",
+    "frontend"
+  );
+  if (!fs.existsSync(frontendDeploymentsDir))
+    fs.mkdirSync(frontendDeploymentsDir, { recursive: true });
+
+  fs.writeFileSync(
+    path.join(frontendDeploymentsDir, "localhost.json"),
+    JSON.stringify(output, null, 2)
+  );
+  console.log("Also copied addresses to frontend/localhost.json");
 }
 
 main().catch((error) => {

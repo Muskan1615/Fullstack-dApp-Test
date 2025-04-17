@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "compile": "hardhat compile && ts-node scripts/copyAbis.ts",
     "test": "npx hardhat test"
   },
   "keywords": [],

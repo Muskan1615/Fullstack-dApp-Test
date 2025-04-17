@@ -10,7 +10,7 @@ const durationEl = document.getElementById("duration");
 
 async function loadContracts() {
   [contractABI, addresses] = await Promise.all([
-    fetch("TokenVestingABI.json").then((res) => res.json()),
+    fetch("abi/TokenVestingABI.json").then((res) => res.json()),
     fetch("localhost.json").then((res) => res.json()),
   ]);
 
