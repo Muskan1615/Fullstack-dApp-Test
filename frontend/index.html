@@ -1,17 +1,46 @@
 <!DOCTYPE html>
-<html>
-<head><title>Token Vesting dApp</title></head>
-<body>
-  <h1>Vesting Dashboard</h1>
-  <button onclick="connect()">Connect Wallet</button>
-  <script src="https://cdn.jsdelivr.net/npm/ethers@6.6.2/dist/ethers.umd.min.js"></script>
-  <script>
-    async function connect() {
-      if (window.ethereum) {
-        await window.ethereum.request({ method: 'eth_requestAccounts' });
-        alert("Wallet connected!");
-      }
-    }
-  </script>
-</body>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Token Vesting Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Token Vesting Dashboard</h1>
+      </header>
+
+      <div id="wallet-section" class="section">
+        <button id="connect-wallet">Connect Wallet</button>
+      </div>
+
+      <div id="vesting-info" class="section">
+        <h2>Vesting Information</h2>
+        <p>
+          <strong>Total Amount:</strong>
+          <span id="total-amount">Loading...</span>
+        </p>
+        <p>
+          <strong>Claimed:</strong> <span id="claimed-amount">Loading...</span>
+        </p>
+        <p>
+          <strong>Start Date:</strong> <span id="start-date">Loading...</span>
+        </p>
+        <p><strong>Duration:</strong> <span id="duration">Loading...</span></p>
+      </div>
+
+      <div id="claim-section" class="section">
+        <button id="claim-btn">Claim Tokens</button>
+      </div>
+
+      <footer>
+        <p>&copy; 2025 TokenVest</p>
+      </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/ethers@6.6.2/dist/ethers.umd.min.js"></script>
+    <script src="app.js"></script>
+  </body>
 </html>

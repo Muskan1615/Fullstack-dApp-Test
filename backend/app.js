@@ -1,17 +1,23 @@
 const express = require("express");
-const { ethers } = require("ethers");
-const logger = require("./logger");
+const logger = require("./logger.js");
+const vestingRoutes = require("./routes/vestingRoutes");
+
 const app = express();
 app.use(express.json());
+const cors = require("cors");
 
-app.get("/vesting/:address", async (req, res) => {
-  logger.info(`Fetching vesting schedule for ${req.params.address}`);
-  res.send({ address: req.params.address, vested: 100 });
+app.use(
+  cors({
+    origin: process.env.ALLOWED_ORIGIN || "*",
+    methods: ["GET", "POST"],
+  })
+);
+
+app.use((req, res, next) => {
+  logger.info(`Request: ${req.method} ${req.url}`);
+  next();
 });
 
-app.post("/claim", async (req, res) => {
-  logger.info("Claim requested");
-  res.send({ status: "claim simulated" });
-});
+app.use("/api", vestingRoutes);
 
 app.listen(3001, () => logger.info("Backend listening on port 3001"));
