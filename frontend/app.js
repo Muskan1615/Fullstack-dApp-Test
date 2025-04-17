@@ -40,6 +40,7 @@ async function connectWallet() {
 
       await initContract();
       await getVestingDetails(userAddress);
+      subscribeToEvents();
     } catch (err) {
       console.error("Error connecting wallet:", err);
     }
@@ -89,5 +90,25 @@ async function initContract() {
   contract = new ethers.Contract(addresses.vesting, contractABI, signer);
   claimBtn.addEventListener("click", claimTokens);
 }
+
+function subscribeToEvents() {
+  if (!contract || !userAddress) return;
+
+  contract.on("TokensClaimed", (user, amount) => {
+    if (user.toLowerCase() === userAddress.toLowerCase()) {
+      console.log(
+        "Tokens claimed in real-time:",
+        ethers.formatUnits(amount, DECIMALS)
+      );
+      getVestingDetails(user);
+    }
+  });
+}
+
+window.addEventListener("beforeunload", () => {
+  if (contract) {
+    contract.removeAllListeners("TokensClaimed");
+  }
+});
 
 connectBtn.addEventListener("click", connectWallet);
