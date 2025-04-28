@@ -2,9 +2,10 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
-contract TokenVesting is Ownable {
+contract TokenVesting is Ownable, ReentrancyGuard {
     using SafeERC20 for IERC20;
 
     IERC20 public token;
@@ -25,6 +26,7 @@ contract TokenVesting is Ownable {
         uint256 duration
     );
     event TokensClaimed(address indexed beneficiary, uint256 amount);
+    event TokensWithdrawn(uint256 amount);
 
     constructor(IERC20 _token) Ownable(msg.sender) {
         token = _token;
@@ -55,7 +57,7 @@ contract TokenVesting is Ownable {
         emit VestingAdded(beneficiary, amount, start, duration);
     }
 
-    function claim() external {
+    function claim() external nonReentrant {
         VestingSchedule storage schedule = schedules[msg.sender];
 
         require(schedule.totalAmount > 0, "No vesting schedule");
@@ -88,7 +90,10 @@ contract TokenVesting is Ownable {
         return claimableAmount;
     }
 
-    function withdrawTokens(uint256 amount) external onlyOwner {
+    function withdrawTokens(uint256 amount) external onlyOwner nonReentrant {
+        require(amount > 0, "Amount must be greater than 0");
         token.safeTransfer(owner(), amount);
+
+        emit TokensWithdrawn(amount);
     }
 }

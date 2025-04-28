@@ -95,6 +95,7 @@ npx hardhat run scripts/addVesting.ts --network localhost
 PRIVATE_KEY=your-private-key-here
 RPC_URL=rpc-url-of-network
 VESTING_ADDRESS=deployed-vesting-address
+ALLOWED_ORIGIN=url-of-frontend
 ```
 
 - Run backend

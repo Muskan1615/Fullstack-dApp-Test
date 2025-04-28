@@ -22,19 +22,24 @@ async function getVestingDetails(address) {
       duration: schedule.duration.toString(),
     };
   } catch (error) {
-    console.error("Error fetching vesting details:", error);
-    throw error;
+    console.error("Error fetching vesting details:", error.message || error);
+    throw new Error("Failed to fetch vesting details. Please try again later.");
   }
 }
 
 async function claimTokens() {
   try {
     const tx = await tokenVestingContract.claim();
-    await tx.wait();
-    return tx;
+    const receipt = await tx.wait();
+    if (receipt.status === 1) {
+      console.log("Transaction successful:", receipt);
+      return receipt;
+    } else {
+      throw new Error("Transaction failed");
+    }
   } catch (error) {
-    console.error("Error claiming tokens:", error);
-    throw error;
+    console.error("Error claiming tokens:", error.message || error);
+    throw new Error("Failed to claim tokens. Please try again later.");
   }
 }
 

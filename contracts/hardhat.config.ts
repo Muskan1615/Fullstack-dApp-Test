@@ -17,6 +17,7 @@ const config: HardhatUserConfig = {
   networks: {
     localhost: {
       url: process.env.RPC_URL,
+      accounts: [process.env.PRIVATE_KEY ?? ""]
     },
   },
   paths: {

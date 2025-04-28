@@ -8,8 +8,13 @@ router.get("/vesting/:address", async (req, res) => {
     const vestingInfo = await getVestingDetails(address);
     res.json(vestingInfo);
   } catch (error) {
-    console.error("Error while fetching vesting details:", error);
-    res.status(500).json({ error: "Failed to fetch vesting details" });
+    console.error(
+      "Error while fetching vesting details:",
+      error.message || error
+    );
+    res.status(500).json({
+      error: "Failed to fetch vesting details. Please try again later.",
+    });
   }
 });
 
@@ -18,8 +23,10 @@ router.post("/claim", async (req, res) => {
     const tx = await claimTokens();
     res.json({ success: true, transaction: tx });
   } catch (error) {
-    console.error("Error while claiming tokens:", error);
-    res.status(500).json({ error: "Failed to claim tokens" });
+    console.error("Error while claiming tokens:", error.message || error);
+    res
+      .status(500)
+      .json({ error: "Failed to claim tokens. Please try again later." });
   }
 });
 
